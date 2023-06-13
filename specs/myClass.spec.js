@@ -56,17 +56,40 @@ describe("Test suit", function() {
   //   expect(spy.calledWith(10, 20)).to.be.true;
   // });
 
-  // Esse teste vai passar 
+  // Esse teste vai passar por fazer somente uma chamada
   it("Spy the callback method", function() {
     var callback = sinon.spy();
     myObj.callTheCallBack(callback);
     expect(callback.calledOnce).to.be.true;
   });
 
+  //  Esse teste também vai passar por ser falsa a segunda chamada
   it("Spy the another callback method ", function() {
     var callback = sinon.spy();
     myObj.callTheCallBack(callback);
     expect(callback.calledTwice).to.be.false;
+  });
+
+  // Esse teste vai passar a palavra Hello pela segunda vez. A primeira foi na chamada anterior do callAnotherFn
+  it("Mock the sayHello method", function() {
+    myObj.callAnotherFn();
+  });
+
+  // Esse teste não vai passar o Hello novamente. Ele foi ignorado.
+  // it("Mock the again sayHello method", function() {
+  //   var mock = sinon.mock(myObj);
+  //   var expectation = mock.expects("sayHello");
+  //   expectation.exactly(1);
+  //   myObj.callAnotherFn();
+  // });
+
+  // Este teste não vai passar pelo Hello novamente porém passa pelo Hello world
+  it("Mock the sayHello and anotherSayHello method", function() {
+    var mock = sinon.mock(myObj);
+    var expectation = mock.expects("sayHello");
+    expectation.exactly(1);
+    expectation.withArgs("Hello world")
+    myObj.callNewFn();
   });
 
 });
