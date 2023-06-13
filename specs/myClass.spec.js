@@ -4,7 +4,7 @@ var myObj = new MyClass();
 var chai = require("chai");
 var expect = chai.expect;
 
-describe("Test suit", function() {
+describe.skip("Test suit", function() {
   it("Test the add method with wrong result", function() {
     expect(myObj.add(1, 2)).to.be.not.equal(5);
   });
@@ -88,8 +88,101 @@ describe("Test suit", function() {
     var mock = sinon.mock(myObj);
     var expectation = mock.expects("sayHello");
     expectation.exactly(1);
-    expectation.withArgs("Hello world")
+    expectation.withArgs("Hello world");
     myObj.callNewFn();
   });
+
+});
+
+describe("Test suit for stub", function() {
+  //  Os testes abaixo devem ser rodados um por vez conforme comentários
+  // Este teste vai passar independente dos argumentos se o return for igual ao retorno final
+  it("Stub the add method with same result", function() {
+    var stub = sinon.stub(myObj, "add");
+    stub.withArgs(10, 20).returns(100);
+    expect(myObj.callAnotherFn(10, 20)).to.be.equal(100);
+  });
+
+  // Vai passar com o argumento errado por "to.be.not.equal"
+  // it("Stub the add method with not equal args", function() {
+  //   var stub = sinon.stub(myObj, "add");
+  //   stub.withArgs(10, 30).returns(100);
+  //   expect(myObj.callAnotherFn(10, 20)).to.be.not.equal(100);
+  // });
+
+  // Vai não vai passar pois os argumentos não estão iguais
+  // it("Stub the add method with not equal args", function() {
+  //   var stub = sinon.stub(myObj, "add");
+  //   stub.withArgs(10, 20).returns(100);
+  //   expect(myObj.callAnotherFn(10, 30)).to.be.equal(100);
+  // });
+
+  //  Vai passar com o resultado diferente por "to.be.not.equal"
+  // it("Stub the add method with not equal result", function() {
+  //   var stub = sinon.stub(myObj, "add");
+  //   stub.withArgs(10, 30).returns(90);
+  //   expect(myObj.callAnotherFn(10, 30)).to.be.not.equal(100);
+  // });
+
+  //  Vai passar com o resultado diferente por "to.be.not.equal"
+  // it("Stub the add method with not equal result", function() {
+  //   var stub = sinon.stub(myObj, "add");
+  //   stub.withArgs(10, 30).returns(100);
+  //   expect(myObj.callAnotherFn(10, 30)).to.be.not.equal(90);
+  // });
+
+  //  Não vai passar com o resultado diferente por "to.be.equal"
+  // it("Stub the add method with not equal result", function() {
+  //   var stub = sinon.stub(myObj, "add");
+  //   stub.withArgs(10, 30).returns(90);
+  //   expect(myObj.callAnotherFn(10, 30)).to.be.equal(100);
+  // });
+
+  //  Não vai passar com o resultado diferente por "to.be.equal"
+  // it("Stub the add method with not equal result", function() {
+  //   var stub = sinon.stub(myObj, "add");
+  //   stub.withArgs(10, 30).returns(100);
+  //   expect(myObj.callAnotherFn(10, 30)).to.be.equal(90);
+  // });
+
+  //  Vai passar com o resultado iguais nas suas chamadas por "to.be.equal"
+  // it("Stub the add method with equal result with twice call", function() {
+  //   var stub = sinon.stub(myObj, "add");
+  //   stub.withArgs(10, 20)
+  //   .onFirstCall().returns(100)
+  //   .onSecondCall().returns(200);
+  //   expect(myObj.callAnotherFn(10, 20)).to.be.equal(100);
+  //   expect(myObj.callAnotherFn(10, 20)).to.be.equal(200);
+  // });
+
+  //  Vai passar com o resultado diferente nas suas chamadas por "to.be.not.equal"
+  // it("Stub the add method with equal result with twice call", function() {
+  //   var stub = sinon.stub(myObj, "add");
+  //   stub.withArgs(10, 20)
+  //   .onFirstCall().returns(100)
+  //   .onSecondCall().returns(200);
+  //   expect(myObj.callAnotherFn(10, 20)).to.be.not.equal(200);
+  //   expect(myObj.callAnotherFn(10, 20)).to.be.not.equal(300);
+  // });
+
+    //  Não vai passar com o resultado diferente nas suas chamadas por "to.be.equal"
+  // it("Stub the add method with equal result with twice call", function() {
+  //   var stub = sinon.stub(myObj, "add");
+  //   stub.withArgs(10, 20)
+  //   .onFirstCall().returns(100)
+  //   .onSecondCall().returns(200);
+  //   expect(myObj.callAnotherFn(10, 20)).to.be.equal(200);
+  //   expect(myObj.callAnotherFn(10, 20)).to.be.equal(200);
+  // });
+
+  //  Não vai passar com o resultado diferente nas suas chamadas por "to.be.equal"
+  // it("Stub the add method with equal result with twice call", function() {
+  //   var stub = sinon.stub(myObj, "add");
+  //   stub.withArgs(10, 20)
+  //   .onFirstCall().returns(100)
+  //   .onSecondCall().returns(200);
+  //   expect(myObj.callAnotherFn(10, 20)).to.be.equal(100);
+  //   expect(myObj.callAnotherFn(10, 20)).to.be.equal(300);
+  // });
 
 });
