@@ -15,12 +15,12 @@ describe("Test suit", function() {
 
   // Os testes abaixo devem ser rodados individualmente para serem compreendidos
   // Este teste vai rodar com sucesso pois spy roda somente uma vez.
-  // it("Spy the add method with correct result", function() {
-  //   var spy = sinon.spy(myObj, "add");
-  //   var arg1 = 10, arg2 = 20;
-  //   myObj.callAnotherFn(arg1, arg2);
-  //   sinon.assert.calledOnce(spy);
-  // });
+  it("Spy the add method with correct result", function() {
+    var spy = sinon.spy(myObj, "add");
+    var arg1 = 10, arg2 = 20;
+    myObj.callAnotherFn(arg1, arg2);
+    sinon.assert.calledOnce(spy);
+  });
 
   // Este teste vai rodar sem sucesso pois deveria ser chamado duas vezes e foi somente uma vez.
   // it("Spy again the add method with correct result", function() {
@@ -48,20 +48,25 @@ describe("Test suit", function() {
   //   expect(spy.calledWith(arg1, arg2)).to.be.true;
   // });
 
-  // 
-  it("Spy the add method with correct result", function() {
-    var spy = sinon.spy(myObj, "add");
-    var arg1 = 10, arg2 = 20;
-    myObj.callAnotherFn(arg1, arg2);
-    expect(spy.calledWith(arg1, arg2)).to.be.true;
-  });
-
-  // 
-  // it("Spy the add method with wrong result", function() {
+  // Esse teste vai passar, apesar de não ser uma boa prática, foi somente para testar a chamada.
+  // it("Spy the add method with correct result", function() {
   //   var spy = sinon.spy(myObj, "add");
   //   var arg1 = 10, arg2 = 20;
   //   myObj.callAnotherFn(arg1, arg2);
-  //   expect(spy.calledTwice).to.be.not.true;
+  //   expect(spy.calledWith(10, 20)).to.be.true;
   // });
+
+  // Esse teste vai passar 
+  it("Spy the callback method", function() {
+    var callback = sinon.spy();
+    myObj.callTheCallBack(callback);
+    expect(callback.calledOnce).to.be.true;
+  });
+
+  it("Spy the another callback method ", function() {
+    var callback = sinon.spy();
+    myObj.callTheCallBack(callback);
+    expect(callback.calledTwice).to.be.false;
+  });
 
 });

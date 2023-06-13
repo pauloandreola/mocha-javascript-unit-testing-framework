@@ -13,6 +13,10 @@ class MyClass {
     var result = this.add(arg1, arg2);
     return result;
   }
+
+  callTheCallBack(callback) {
+    callback()
+  }
 }
 
 module.exports = MyClass;
