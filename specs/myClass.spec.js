@@ -3,8 +3,11 @@ var sinon = require("sinon");
 var myObj = new MyClass();
 var chai = require("chai");
 var expect = chai.expect;
+const chaiAsPromise = require("chai-as-promised");
+chai.use(chaiAsPromise);
 
-describe.skip("Test suit", function() {
+
+describe.skip("Test suit for spy and mock", function() {
   it("Test the add method with wrong result", function() {
     expect(myObj.add(1, 2)).to.be.not.equal(5);
   });
@@ -94,7 +97,7 @@ describe.skip("Test suit", function() {
 
 });
 
-describe("Test suit for stub", function() {
+describe.skip("Test suit for stub", function() {
   //  Os testes abaixo devem ser rodados um por vez conforme comentários
   // Este teste vai passar independente dos argumentos se o return for igual ao retorno final
   it("Stub the add method with same result", function() {
@@ -185,4 +188,63 @@ describe("Test suit for stub", function() {
   //   expect(myObj.callAnotherFn(10, 20)).to.be.equal(300);
   // });
 
+
+
 });
+
+describe.skip("Test the promise", function() {
+  it("Promise first test case", function() {
+    myObj.testPromise();
+  });
+
+  // Vai passar pois o tempo está em 6 e a função testPromise em 6 segundos
+  it("Promise second test case", function(done) {
+    this.timeout(0);
+    myObj.testPromise().then(function(result) {
+      expect(result).to.be.equal(6);
+      done();
+    });
+  });
+
+  // Vai passar pois o tempo está em 4 a função testPromise em 6 segundos porém ".to.be.not.equal" 
+  it("Promise another second test case", function(done) {
+    this.timeout(0);
+    myObj.testPromise().then(function(result) {
+    expect(result).to.be.not.equal(4);
+      done();
+    });
+  });
+
+  // Não vai passar pois o tempo está em 7 e a função testPromise em 6 segundos
+  // it("Promise third test case", function(done) {
+  //   this.timeout(0);
+  //   myObj.testPromise().then(function(result) {
+  //     expect(result).to.be.equal(7);
+  //     done();
+  //   });
+  // });
+
+  // Vai passar pois o tempo está em 6 e a função testPromise em 6 segundos
+  it("Promise fourth test case", function() {
+    this.timeout(0);
+    // myObj.testPromise().then(function(result) {
+    //   expect(result).to.be.equal(6);
+    //   done();
+    // });
+    return expect(myObj.testPromise()).to.eventually.equal(6);
+  });
+
+  // Não vai passar pois o tempo está em 62 e a função testPromise em 6 segundos
+  it("Promise another fourth test case", function() {
+    this.timeout(0);
+    return expect(myObj.testPromise()).to.eventually.equal(62);
+  });
+
+  // Vai passar pois o tempo está em 7 e a função testPromise em 6 segundos porém ".to.be.not.equal"
+  it("Promise again another fourth test case", function() {
+    this.timeout(0);
+    return expect(myObj.testPromise()).to.eventually.not.equal(62);
+  });
+
+});
+

@@ -4,11 +4,11 @@ class MyClass {
   }
 
   sayHello() {
-    console.log("Hello")
+    console.log("Hello");
   }
 
   anotherSayHello(str) {
-    console.log(str)
+    console.log(str);
   }
 
   add(arg1, arg2) {
@@ -30,7 +30,15 @@ class MyClass {
   }
 
   callTheCallBack(callback) {
-    callback()
+    callback();
+  }
+
+  testPromise() {
+    return new Promise(function(resolve, reject) {
+      setTimeout(()=> resolve(3), 6000);
+    }).then(function(result) {
+      return result * 2;
+    })
   }
 }
 
